@@ -12,48 +12,49 @@ namespace Janus_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class TransactionsController : ControllerBase
     {
         private readonly Janus_APIContext _context;
 
-        public UsersController(Janus_APIContext context)
+        public TransactionsController(Janus_APIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Transactions
+        // The Type in Transaction and name of Transaction List is Transactions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Transactions.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Transactions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Transaction>> GetTransaction(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var transaction = await _context.Transactions.FindAsync(id);
 
-            if (user == null)
+            if (transaction == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return transaction;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Transactions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutTransaction(int id, Transaction transaction)
         {
             /* Have to include id in fields when calling a PUT*/
-            if (id != user.Id)
+            if (id != transaction.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(transaction).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +62,7 @@ namespace Janus_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!TransactionExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +75,36 @@ namespace Janus_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Transactions
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
         {
-            _context.Users.Add(user);
+            _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Transactions/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteTransaction(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var transaction = await _context.Transactions.FindAsync(id);
+            if (transaction == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool TransactionExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.Transactions.Any(e => e.Id == id);
         }
     }
 }

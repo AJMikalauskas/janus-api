@@ -12,48 +12,49 @@ namespace Janus_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class AssetsController : ControllerBase
     {
         private readonly Janus_APIContext _context;
 
-        public UsersController(Janus_APIContext context)
+        public AssetsController(Janus_APIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Users
+        // GET: api/Assets
+        // The Type in Asset and name of Asset List is Assets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUser()
+        public async Task<ActionResult<IEnumerable<Asset>>> GetAssets()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Assets.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Assets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Asset>> GetAsset(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var asset = await _context.Assets.FindAsync(id);
 
-            if (user == null)
+            if (asset == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return asset;
         }
 
-        // PUT: api/Users/5
+        // PUT: api/Assets/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutAsset(int id, Asset asset)
         {
             /* Have to include id in fields when calling a PUT*/
-            if (id != user.Id)
+            if (id != asset.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(asset).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +62,7 @@ namespace Janus_API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!AssetExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +75,36 @@ namespace Janus_API.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
+        // POST: api/Assets
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Asset>> PostAsset(Asset asset)
         {
-            _context.Users.Add(user);
+            _context.Assets.Add(asset);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("GetAsset", new { id = asset.Id }, asset);
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/Assets/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteAsset(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var asset = await _context.Assets.FindAsync(id);
+            if (asset == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Assets.Remove(asset);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool AssetExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            return _context.Assets.Any(e => e.Id == id);
         }
     }
 }

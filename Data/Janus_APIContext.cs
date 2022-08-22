@@ -8,7 +8,7 @@ namespace Janus_API.Data
         public Janus_APIContext(DbContextOptions<Janus_APIContext> options) : base(options)
         {
         }
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<TransactionType> TransactionTypes { get; set; }
 
@@ -48,27 +48,27 @@ namespace Janus_API.Data
                 .WithMany(x=> x.Transactions)
                 .HasForeignKey(x=> x.AssetId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-/*            modelBuilder.Entity<Transaction>()
-                .HasRequired(c => c.Stage)
-                .WithMany()
-                .WillCascadeOnDelete(false);*/
+            /*            modelBuilder.Entity<Transaction>()
+                            .HasRequired(c => c.Stage)
+                            .WithMany()
+                            .WillCascadeOnDelete(false);*/
             /*            modelBuilder.Entity<AssetType>().HasData(
                                new User() { Id = 1 },
                                new User() { Id = 2 }
                         );*/
-            /*  modelBuilder.Entity<AssetType>().HasData(
-                     new AssetType() { Id = 1, Name = "Stock", Description = "Stock" },
-                     new AssetType() { Id = 2, Name = "Crypto", Description = "Crypto Currency" },
-                     new AssetType() { Id = 3, Name = "Options", Description = "Stock Options" },
-                     new AssetType() { Id = 4, Name = "Cash", Description = "US Dollars" },
-                     new AssetType() { Id = 5, Name = "NFT", Description = "Non-fungible tokens" }
-              );
-              modelBuilder.Entity<TransactionType>().HasData(
-                     new TransactionType() { Id = 1, Name = "Buy", Description = "Purchase Asset" },
-                     new TransactionType() { Id = 2, Name = "Sell", Description = "Sell Asset" },
-                     new TransactionType() { Id = 3, Name = "Deposit", Description = "Deposit" },
-                     new TransactionType() { Id = 4, Name = "Withdraw", Description = "Withdraw" }
-               );*/
+            modelBuilder.Entity<AssetType>().HasData(
+                   new AssetType() { Id = 1, Name = "Stock", Description = "Stock" },
+                   new AssetType() { Id = 2, Name = "Crypto", Description = "Crypto Currency" },
+                   new AssetType() { Id = 3, Name = "Options", Description = "Stock Options" },
+                   new AssetType() { Id = 4, Name = "Cash", Description = "US Dollars" },
+                   new AssetType() { Id = 5, Name = "NFT", Description = "Non-fungible tokens" }
+            );
+            modelBuilder.Entity<TransactionType>().HasData(
+                   new TransactionType() { Id = 1, Name = "Buy", Description = "Purchase Asset" },
+                   new TransactionType() { Id = 2, Name = "Sell", Description = "Sell Asset" },
+                   new TransactionType() { Id = 3, Name = "Deposit", Description = "Deposit" },
+                   new TransactionType() { Id = 4, Name = "Withdraw", Description = "Withdraw" }
+             );
         }
     }
 }
