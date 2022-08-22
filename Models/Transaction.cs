@@ -22,6 +22,7 @@ namespace Janus_API.Models
         public int UserId { get; set; }
         public Asset Asset { get; set; }
         public int? AssetId { get; set; }
+/* Test */
 
     }
 }
